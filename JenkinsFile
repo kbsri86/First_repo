@@ -27,6 +27,7 @@ pipeline {
              steps{
                   snDevOpsStep ()
                   echo "sonar scan in progress"       
+                   snDevOpsChange()
               }
       }      
       
