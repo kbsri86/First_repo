@@ -4,14 +4,14 @@ pipeline {
       maven 'Maven'
    }
    stages {
-       stage("maven clean and build") {
+       stage("s1") {
                 steps {
                     snDevOpsStep ()
                     echo "Building" 
                     sh 'mvn -X clean install -DskipTests'
                 }
        }
-      stage("mvn test and get report") {
+      stage("s2") {
            steps {
                snDevOpsStep ()
                sh 'mvn test'
@@ -23,10 +23,10 @@ pipeline {
           }
         }
     
-      stage("sonar scan") {
+      stage("s3") {
              steps{
                   snDevOpsStep ()
-                  echo "sonar scan in progress"       
+                  echo "deploy in progress"       
                    snDevOpsChange()
               }
       }      
