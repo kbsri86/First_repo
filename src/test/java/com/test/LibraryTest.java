@@ -11,7 +11,7 @@ import static org.junit.Assume.assumeFalse;
 import com.testtt.Library;
 
 public class LibraryTest {
-   private Logger logger = Logger.getLogger(LoggingTest.class);
+   private Logger logger = Logger.getLogger(LibraryTest.class);
 	boolean block = false;
 
 	@Test
