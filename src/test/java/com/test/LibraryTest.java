@@ -11,26 +11,20 @@ import static org.junit.Assume.assumeFalse;
 import com.testtt.Library;
 
 public class LibraryTest {
-   private Logger logger = Logger.getLogger(LibraryTest.class);
-	boolean block = false;
 
 	@Test
 	public void test1() throws InterruptedException {
 		Thread.sleep(5000);
-		logger.info("logging from test1 ");
 	}
 
 	@Test
 	public void test2() throws InterruptedException {
-		logger.info("logging from test2");
 	}
 
 	@Test
 	public void test3() throws InterruptedException {
-		block = true;
 		Thread.sleep(100);
 		Assert.fail("successful failure");
-		logger.info("logging from test3");
 	}
 
 	@Test
@@ -41,7 +35,6 @@ public class LibraryTest {
 	@Ignore
 	@Test
 	public void test5() throws InterruptedException {
-		logger.info("logging from test1 ");
 	}
 	
 	@Test
