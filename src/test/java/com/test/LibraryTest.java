@@ -24,7 +24,7 @@ public class LibraryTest {
 	@Test
 	public void test3() throws InterruptedException {
 		Thread.sleep(100);
-		Assert.fail("successful failure");
+// 		Assert.fail("successful failure");
 	}
 
 	@Test
@@ -39,7 +39,7 @@ public class LibraryTest {
 	
 	@Test
 	public void test6() {
-		throw new RuntimeException();
+// 		throw new RuntimeException();
 	}
 
 }
