@@ -1,10 +1,11 @@
-def artifactname = "sp-boot-app.jar"
+def artifactname = "sp-boot-app"
 def repoName = "sp-boot-app-repo"
+def pkgName = "sp-boot-package"
 def pipelineName = "devops_vk_pipeline"
 def semanticVersion = "${env.BUILD_NUMBER}.0.0"
 def packageName = "spboot-package_${env.BUILD_NUMBER}"
 def version = "${env.BUILD_NUMBER}.0"
-def pkgName = "sp-boot-package"
+
 
 pipeline {
   agent any
@@ -46,7 +47,7 @@ pipeline {
 	               snDevOpsChange()
 	               echo 'Publishing Artifacts....'
                 	sleep 3
-					snDevOpsArtifact(artifactsPayload:"""{"artifacts": [{"name": "${artifactname}-${env.BUILD_NUMBER}","semanticVersion": "${semanticVersion}","repositoryName": "${repoName}"}],"stageName": "PublishArtifacts"}""")            
+					snDevOpsArtifact(artifactsPayload: """{"artifacts": [{"name": "${artifactname}", "version": "1.${env.BUILD_NUMBER}","semanticVersion": "1.${env.BUILD_NUMBER}.0","repositoryName": "${repoName}"}],"branchName":"master"}""")
 	            }
 	            
 	        }
@@ -56,7 +57,7 @@ pipeline {
          	snDevOpsStep (enabled:true)
             //snDevOpsStep (stepSysId:'5b9281591b9c60106951da86cc4bcbfe', ignoreErrors:true)
             echo 'Publishing Package....'
-         	snDevOpsPackage(name: "${pkgName}-${env.BUILD_NUMBER}", artifactsPayload: """{"artifacts":[{"name": "${artifactname}", "repositoryName": "${repoName}"}], "branchName":"master"}""")
+         	snDevOpsPackage(name: "${pkgName}-${env.BUILD_NUMBER}", artifactsPayload: """{"artifacts":[{"name": "${artifactname}", "version": "1.${env.BUILD_NUMBER}", "repositoryName": "${repoName}"}], "branchName":"master"}""")
         
          }
  	}
