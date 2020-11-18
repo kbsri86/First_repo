@@ -23,7 +23,15 @@ pipeline {
                   echo "deploy in progress"       
                    snDevOpsChange()
               }
-      }      
+      }  
+      
+      stage("s4") {
+             steps{
+                  snDevOpsStep ()
+                  echo "deploy in progress"       
+                   snDevOpsChange()
+              }
+      }  
       
   }
 }
