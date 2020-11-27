@@ -13,7 +13,7 @@ pipeline {
       stage("s2") {
            steps {
                snDevOpsStep ()
-                echo "Test" 
+               sh 'mvn clean test'
            }
         }
     
