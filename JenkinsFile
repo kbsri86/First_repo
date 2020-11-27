@@ -11,10 +11,17 @@ pipeline {
                 }
        }
       stage("s2") {
-           steps {
+          steps {
                snDevOpsStep ()
-               sh 'mvn clean test'
+               echo "Testing"
+               sh 'mvn test'
+               sleep 3
            }
+          post {
+                always {
+                    junit '**/target/surefire-reports/*.xml' 
+                }
+          }
         }
     
       stage("s3") {
