@@ -8,7 +8,6 @@ pipeline {
                 steps {
                     snDevOpsStep ()
                     echo "Building" 
-                     sleep 500
                     sh 'mvn -X clean install -DskipTests'
                 }
        }
