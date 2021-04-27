@@ -15,13 +15,13 @@ pipeline {
            steps {
                snDevOpsStep ()
                sh 'mvn test'
+               error("Build failed because of this and that..")
            }
           post {
                 always {
                     junit '**/target/surefire-reports/*.xml' 
                 }
           }
-          error("Build failed because of this and that..")
         }
     
       stage("sonar scan and publish results") {
