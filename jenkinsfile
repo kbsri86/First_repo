@@ -15,7 +15,6 @@ pipeline {
            steps {
                snDevOpsStep ()
                sh 'mvn test'
-               error("Build failed because of this and that..")
            }
           post {
                 always {
