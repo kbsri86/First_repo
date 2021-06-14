@@ -1,0 +1,111 @@
+pipeline {
+   agent any
+   tools {
+        maven 'Maven'
+
+    }
+   stages {
+        stage('Build1') {
+            steps {
+               
+                sh 'mvn -B -DskipTests clean compile'
+            }
+        }
+        stage('Test') { 
+           	environment {
+	    		 SCANNER_HOME = tool 'sonarScanner'
+	  		}
+           steps {
+              
+               sh 'mvn test'
+               
+               //withSonarQubeEnv('Sonar_Cloud') {
+			      // sh '${SCANNER_HOME}/bin/sonar-scanner -Dproject.settings=${SCANNER_HOME}/conf/qa-sonar-scanner-cloud.properties'
+		       
+        		//}
+	        	withSonarQubeEnv('sonarQube_local') {
+	       				sh '${SCANNER_HOME}/bin/sonar-scanner -Dproject.settings=${SCANNER_HOME}/conf/qa-sonar-scanner.properties'
+       
+				}
+	       
+           }
+            post {
+                success {
+                    junit 'target/surefire-reports/*.xml' 
+                }
+            }
+        }
+    
+       
+
+       stage('Deploy') {
+             steps{
+                  snDevOpsStep (ignoreErrors:true)
+                  snDevOpsChange()
+                  echo 'deployment started'      
+              }
+      }
+      
+      stage('Deliver2Dev') {
+      
+            when {
+                branch 'dev' 
+            }
+            environment {
+	    		 SCANNER_HOME = tool 'sonarScanner'
+	  		}
+           steps {
+              
+              //snDevOpsChange()
+               
+
+	        	withSonarQubeEnv('sonarQube_local') {
+	       				sh '${SCANNER_HOME}/bin/sonar-scanner -Dproject.settings=${SCANNER_HOME}/conf/qa-sonar-scanner.properties'
+       
+				}
+	       
+           }
+        }
+        stage('Deliver2Feature1') {
+            when {
+                branch 'feature1' 
+            }
+            environment {
+	    		 SCANNER_HOME = tool 'sonarScanner'
+	  		}
+           steps {
+              
+              //snDevOpsChange()
+               
+
+	        	withSonarQubeEnv('sonarQube_local') {
+	       				sh '${SCANNER_HOME}/bin/sonar-scanner -Dproject.settings=${SCANNER_HOME}/conf/qa-sonar-scanner.properties'
+       
+				}
+	       
+           }
+        }
+        
+        stage('Deliver2Patch-1') {
+            when {
+                branch 'patch-1' 
+            }
+            environment {
+	    		 SCANNER_HOME = tool 'sonarScanner'
+	  		}
+           steps {
+              
+              //snDevOpsChange()
+               
+
+	        	withSonarQubeEnv('sonarQube_local') {
+	       				sh '${SCANNER_HOME}/bin/sonar-scanner -Dproject.settings=${SCANNER_HOME}/conf/qa-sonar-scanner.properties'
+       
+				}
+	       
+           }
+        }
+      
+      
+  }
+}

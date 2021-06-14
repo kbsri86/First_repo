@@ -1,0 +1,92 @@
+pipeline {
+   agent any
+   tools {
+        maven 'Maven'
+    }
+    stages {
+    	
+	    stage('Build1') {
+	            stages {
+	                stage("Build1.1") {
+	                    environment {
+				    		 SCANNER_HOME = tool 'sonarScanner'
+				  		}
+			           steps {
+			              snDevOpsStep()
+			              echo "build 1.1"
+			              snDevOpsChange()
+			               
+			               //withSonarQubeEnv('Sonar_Cloud') {
+						       //sh '${SCANNER_HOME}/bin/sonar-scanner -Dproject.settings=${SCANNER_HOME}/conf/qa-sonar-scanner-cloud.properties'
+					       
+			        		//}
+			        		withSonarQubeEnv('sonarQube_local') {
+			       				sh '${SCANNER_HOME}/bin/sonar-scanner -Dproject.settings=${SCANNER_HOME}/conf/qa-sonar-scanner.properties'
+		       
+        				}
+				       
+			           }
+	                }
+	                stage("Build1.2") {
+	                    stages {
+	                        stage("Build1.2.3") {
+			                    environment {
+						    		 SCANNER_HOME = tool 'sonarScanner'
+						  		}
+					           steps {
+					              snDevOpsStep()
+					              snDevOpsChange()
+					               echo "build 1.2.3"
+
+						        	withSonarQubeEnv('sonarQube_local') {
+						       				sh '${SCANNER_HOME}/bin/sonar-scanner -Dproject.settings=${SCANNER_HOME}/conf/qa-sonar-scanner.properties'
+					       
+			        				}
+						       
+					           }
+
+	                        }
+	                        stage("Build1.2.4") {
+	                            steps {
+	                                snDevOpsStep()
+	                                echo 'Build1.2.4'
+	                                snDevOpsChange()
+	                                sh 'sleep 100'
+	                            }
+	                        }
+	                    }
+	                }
+	            }
+	        }
+	        stage('Test1') {
+	        
+	            parallel {
+	                stage('Test1.1') {
+	                    steps {
+	                    	snDevOpsStep()
+	                         echo 'Test1.1'
+	                         snDevOpsChange()
+	                    }
+	                    post {
+	                        success {
+	                            echo 'Test1.1-success'
+	                        }
+	                    }
+	                }
+	                stage('Test1.2') {
+	                    steps {
+	                        snDevOpsStep()
+	                        snDevOpsChange()
+	                        echo 'Test1.2'
+	                        sh 'sleep 100'
+	                    }
+	                    post {
+	                        success {
+	                            echo 'Test1.2-success'
+	                        }
+	                    }
+	                }
+	            }
+	        }
+   		}
+}
