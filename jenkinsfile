@@ -26,7 +26,6 @@ pipeline {
       stage("sonar scan and publish results") {
              steps{
                   snDevOpsStep ()
-                  sleep 30
                   echo "sonar scan in progress"       
               }
       }
