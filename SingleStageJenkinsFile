@@ -7,7 +7,18 @@ pipeline {
        stage("Deploy") {
              steps{
                   snDevOpsStep ()
-                  snDevOpsChange()
+                  snDevOpsChange(
+                  changeRequestDetails: """ {
+	                        "setCloseCode": true,
+                           "attributes": {
+                                 "description": "DevOps test ",
+                                 "priority": "5",
+                                 "justification": "Connect your planning ",
+                                 "implementation_plan": "Test implementation plan",
+                                 "test_plan": "Test plan to test the tests which test the test-now application",
+                                 "type":"normal"
+                           }
+                  } """)
                   echo "deployment started"       
               }
       }
