@@ -1,0 +1,16 @@
+pipeline {
+   agent any
+   tools {
+      maven 'Maven'
+   }
+   stages {
+       stage("deploy in to the non-prod env") {
+             steps{
+                  snDevOpsStep ()
+                  snDevOpsChange()
+                  echo "deployment started"       
+              }
+      }
+      
+  }
+}
