@@ -4,7 +4,7 @@ pipeline {
       maven 'Maven'
    }
    stages {
-       stage("deploy in to the non-prod env") {
+       stage("Deploy") {
              steps{
                   snDevOpsStep ()
                   snDevOpsChange()
